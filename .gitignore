@@ -1,7 +1,37 @@
+# Виртуальное окружение
 venv/
+.venv/
+env/
+
+# Python мусор
 __pycache__/
-*.pyc
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-data/raw/
-data/processed/
-models/
+
+# Данные (они большие, их не заливаем на GitHub)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Сохраненные модели (весят много)
+models/*
+!models/.gitkeep
+
+# Файлы, которые генерируются при запуске (если понадобятся)
+submissions/*
+!submissions/.gitkeep
+
+# Системный мусор
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
