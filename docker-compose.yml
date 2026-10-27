@@ -1,0 +1,22 @@
+services:
+  pipeline:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./submissions:/app/submissions
+    command: python -m src.train
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["production"]
+    environment:
+      POSTGRES_USER: pvc
+      POSTGRES_PASSWORD: pvc
+      POSTGRES_DB: pvc_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
