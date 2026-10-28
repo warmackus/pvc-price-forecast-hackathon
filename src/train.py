@@ -182,8 +182,11 @@ def main():
 
     horizon_df = pd.DataFrame(horizon_smape)
     horizon_path = os.path.join(submissions_dir, 'horizon_smape.csv')
-    horizon_df.to_csv(horizon_path, index=False)
-    print(f"✅ Ошибка по горизонтам сохранена в {horizon_path}")
+    try:
+        horizon_df.to_csv(horizon_path, index=False)
+        print(f"✅ Ошибка по горизонтам сохранена в {horizon_path}")
+    except PermissionError:
+        print(f"❌ Нет прав на запись в {horizon_path}. Выполните: sudo chown -R $USER:$USER submissions/")
 
 
 if __name__ == "__main__":

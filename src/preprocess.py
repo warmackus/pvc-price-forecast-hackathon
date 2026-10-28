@@ -24,7 +24,6 @@ def load_and_prepare():
                   df['nomenclature_ru'].str.contains('Китай', case=False, na=False)
     df_target = df[target_mask].copy()
 
-    # Приводим дату к datetime, если еще не приведена
     if not pd.api.types.is_datetime64_any_dtype(df_target['report_date']):
         df_target['report_date'] = pd.to_datetime(df_target['report_date'], unit='D', origin='1899-12-30')
 
@@ -53,8 +52,8 @@ def load_and_prepare():
     for driver, series in driver_weekly_dict.items():
         df_wide = pd.merge(df_wide, series, on='date', how='left')
 
-    # 4. Заполняем пропуски (forward fill)
-    df_wide = df_wide.ffill()
+    # 4. Заполняем ТОЛЬКО одиночные пропуски (limit=1), чтобы не «замазывать» длинные обрывы
+    df_wide = df_wide.ffill(limit=1)
 
     # 5. Сортируем по дате
     df_wide = df_wide.sort_values('date').reset_index(drop=True)
